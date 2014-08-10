@@ -1,0 +1,72 @@
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+@mixin transition($type,$time){
+    -webkit-transition: $type $time ease;
+    -moz-transition: $type $time ease;
+    -ms-transition: $type $time ease;
+    -o-transition: $type $time ease;
+    transition: $type $time ease;
+}
+
+////vars////
+$black: #000;
+$white: #fff;      
+
+
+@mixin body-font(){
+    font-family: 'Open Sans', sans-serif;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+html{
+    height: 100% !important;
+    width: 100% !important;
+}
+
+body {
+    height: 100% !important;
+    width: 100% !important;
+    font-weight: 300;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch; 
+    @include body-font();
+}
+
+p{
+    font-weight: 300;
+}
+
+h1, h2, h3, h4{
+    @include body-font();
+    font-weight: 400;
+}
+
+
+
+/* -------------- 480 ------------ */
+@media only screen and (min-width: 480px) {
+
+}
+/* -------------- 600 ------------ */
+@media only screen and (min-width: 600px) {
+
+}
+/* -------------- 768 ------------ */
+@media only screen and (min-width: 768px) {
+
+}
+/* -------------- 992 ------------ */
+@media only screen and (min-width: 992px) {
+
+}
+/* -------------- 1366 ------------ */
+@media only screen and (min-width: 1366px) {
+
+}

@@ -1,0 +1,26 @@
+{
+  "name": "socimar",
+  "version": "0.0.0",
+  "description": "A tool to help create images to share on social networks",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arrows132/socimar.git"
+  },
+  "author": "Bracket Design Co",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arrows132/socimar/issues"
+  },
+  "homepage": "http://nothingyet",
+  "dependencies" : { 
+      "gulp": "3.8.7",
+      "gulp-concat": "*",
+      "gulp-uglify": "*",
+      "gulp-imagemin": "*",
+      "gulp-swig": "*",
+      "gulp-sass": "*",
+      "gulp-connect": "2.0.6",
+      "node-sass": "0.9.3"
+  }
+}
