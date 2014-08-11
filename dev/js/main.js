@@ -6,9 +6,10 @@
 	}
 
 	socimar.canvasSetup = function(){
-		var canvas       = document.getElementById("canvas"),
-    		canvasHeight = 378,
-   			canvasWidth  = 755;
+		var canvas       = document.getElementById("canvas");
+    		canvas.width  = 700,
+   			canvas.height = 450;
+
    		console.log("set up canvas!");
 	}
 
