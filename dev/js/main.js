@@ -29,16 +29,22 @@
 			return data;
 		}
 	}
-
+	socimar.tint = function(){
+		var color = document.getElementById("js-output").value;
+		socimar.ctx.fillStyle = color;
+		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height)
+	}
 
 	socimar.canvasSetup = function(){
-		var canvas       = document.getElementById("canvas");
-    		canvas.width  = 700,
-   			canvas.height = 450;
+				socimar.canvas 				= document.getElementById("canvas");
+    		socimar.canvas.width  = 700,
+   			socimar.canvas.height = 450;
+   			socimar.ctx 	= canvas.getContext("2d");
 	}
 
 	socimar.init = function(string){
 		socimar.canvasSetup();
+		socimar.tint("rgba(200,0,200,0.53)");
 	}
 
 

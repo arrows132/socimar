@@ -34,6 +34,13 @@
 				    <div class="variants" style="display:none"></div>
 				    <div class="visited" style="display:none"></div>
 				</div>
+				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.tint();">
+					<input name="r" type="range" min="0" max="255" step="5" value="50"  data-rangeslider class="range">
+					<input name="g" type="range" min="0" max="255" step="5" value="100"  data-rangeslider class="range">	
+					<input name="b" type="range" min="0" max="255" step="5" value="150"  data-rangeslider class="range">	
+					<input name="a" type="range" min="0" max="1" step=".02" value=".45"  data-rangeslider class="range">	
+					<output name="result" id="js-output"></output>
+				</form>
 			</div>
 		</div>
 	</div>
