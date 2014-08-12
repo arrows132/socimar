@@ -2,6 +2,7 @@
  
 
 <div class="container">
+	<header><h1>Socimar</h1></header>
 	<div class="row">
 
 		<div class="col-sm-8">
@@ -15,24 +16,17 @@
 				<h2> Controls </h2>
 
 				<div class="drag-and-drop main-image">
-					<span> Drag n Drop</span>
+					<span>Drag n Drop</span><br>
+					<span class="tiny">background image</span>
 				</div>
 
-				<input type="range" min="0" max="100" step="10" value="50"  data-rangeslider class="range">	
-				<output id="js-output"></output>
 				<div class="font-explorer">
 					<div class="search">
-				      <label for="font"><i class="icon-search"></i></label>
+				      <label for="font"><i class="fa fa-search"></i></label>
 				      <input id="font" class="font" type="text" value="" data-provide="typeahead"/>
+				      <i class="fa fa-random random"></i>
 				    </div>
-				    <i class="icon-heart action heart hide" title="Love!" data-rel="tooltip"></i>
-				    <i class="icon-cog action history" title="History" data-rel="tooltip"></i>
-				    <i class="icon-refresh action random" title="Randomize" data-rel="tooltip"></i>
-				    <i class="icon-edit action" title="Edit" data-rel="tooltip"></i>
-				    <i class="icon-info-sign action more" title="Details" data-rel="tooltip"></i>
-				    <div class="clearfix"></div>
 				    <div class="variants" style="display:none"></div>
-				    <div class="visited" style="display:none"></div>
 				</div>
 				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.tint();">
 					<input name="r" type="range" min="0" max="255" step="5" value="50"  data-rangeslider class="range">

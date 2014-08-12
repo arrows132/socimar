@@ -43,7 +43,6 @@ gulp.task('scripts', function() {
 
 gulp.task('sass', function () {
     gulp.src('./dev/css/*.scss')
-        .pipe(sass())
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./build/css'))
         .pipe(connect.reload());
