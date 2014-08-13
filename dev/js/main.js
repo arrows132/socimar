@@ -6,7 +6,6 @@
 
 	//ls == localStorage namespace
 	socimar.ls = {
-		"user": {},
 		set:function(key, data){
 			store.set(key, data);
 			console.log("Set the " + key + " as " + data + " in ls");
