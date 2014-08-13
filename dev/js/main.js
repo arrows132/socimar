@@ -1,6 +1,6 @@
-    var socimar = socimar || {};
-    
-   	var smallFont = 15,
+	var socimar = socimar || {};
+	
+	var smallFont = 15,
 		mediumFont = 25,
 		largeFont = 40;
 
@@ -35,15 +35,15 @@
 	}
 
 	socimar.canvasSetup = function(){
-		socimar.canvas 				= document.getElementById("canvas");
-    	socimar.canvas.width  = 700,
-   		socimar.canvas.height = 394;
-   		socimar.ctx 	= canvas.getContext("2d");
+		socimar.canvas = document.getElementById("canvas");
+		socimar.canvas.width  = 700,
+		socimar.canvas.height = 394;
+		socimar.ctx = canvas.getContext("2d");
 	}
 
 	socimar.canvasResize = function(){
 		var newWidth,
-				newHeight;
+			newHeight;
 		if(socimar.img.width > 700)
 			newWidth = 700;
 		else
@@ -51,7 +51,7 @@
 
 		newHeight = (socimar.img.height / socimar.img.width) * newWidth;
 		socimar.canvas.width  = newWidth,
-   	socimar.canvas.height = newHeight;
+	socimar.canvas.height = newHeight;
 
 	}
 
@@ -66,13 +66,20 @@
 		img.onload = function() {
 			socimar.img = img;
 			socimar.canvasResize();
-      socimar.drawImage()
-    }
+	  		socimar.drawImage()
+		}
 	}
 
 	socimar.drawImage = function() {
 		socimar.ctx.drawImage(socimar.img, 0, 0, socimar.canvas.width, socimar.canvas.height);
 	}
+
+	socimar.saveImage = function(){
+		console.log("saving image");
+		var image  = socimar.canvas.toDataURL().replace( 'image/png', 'image/octet-stream' );
+		download.href = image;
+	}
+	
 
 	socimar.font = function(font){
 		//on first run it sets open sans as default font. 
@@ -93,10 +100,15 @@
 		}
 	}
 
-	socimar.init = function(string){
-		socimar.canvasSetup();
+	socimar.events = function(){
+		var download     = document.getElementById('download');
+		download.addEventListener( 'click', socimar.saveImage, false );
 	}
 
+	socimar.init = function(){
+		socimar.canvasSetup();
+		socimar.events();
+	}
 
 	socimar.init();
 
@@ -122,7 +134,7 @@
 
 	$.getJSON(url,function(json){
 	  $.each(json.items,function(i,type){
-	    families.push(type.family);
+		families.push(type.family);
 	  });
 	  socimar.font();
 	});
@@ -132,42 +144,42 @@
 		source: families,
 		updater:function (item) {
 			runFont(item);
-	    	$("#font").attr("placeholder",item);
+			$("#font").attr("placeholder",item);
 		}
 	});
 
 	function runFont(family) {
 	  $.getJSON(url,function(json){
-	    $.each(json.items,function(i,type){
-	      if (type.family === family) {
-	        var familyPlus = family.replace(/\s/g, '+');
-	        var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + ":" + type.variants + "";        
-	        $(".gf-link").remove();
-	        $("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
-	        socimar.font(family);
-	        if($(".variants").text().match('italic')){
-	          $("em").css("font-style","italic");
-	        }
-	        if($(".variants").text().match('700')){
-	          $("strong,h1,h2,h3").css("font-weight","700");
-	        }
+		$.each(json.items,function(i,type){
+		  if (type.family === family) {
+			var familyPlus = family.replace(/\s/g, '+');
+			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + ":" + type.variants + "";        
+			$(".gf-link").remove();
+			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
+			socimar.font(family);
+			if($(".variants").text().match('italic')){
+			  $("em").css("font-style","italic");
+			}
+			if($(".variants").text().match('700')){
+			  $("strong,h1,h2,h3").css("font-weight","700");
+			}
 	 
-	      }
-	    });
+		  }
+		});
 	  });
 	}
 
 	function random() {
 	  $.getJSON(url,function(json){
-	    var count = json.items.length,
-	        random = Math.ceil(Math.random() * count);
-	    $.each(json.items,function(i,type){
-	      if(i === random){
-	        var family = type.family;
-	        $("#font").attr("placeholder", family);
-	        runFont(family);
-	      }
-	    });
+		var count = json.items.length,
+			random = Math.ceil(Math.random() * count);
+		$.each(json.items,function(i,type){
+		  if(i === random){
+			var family = type.family;
+			$("#font").attr("placeholder", family);
+			runFont(family);
+		  }
+		});
 	  });
 	  $(".heart").removeClass("active");
 	}

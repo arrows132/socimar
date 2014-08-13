@@ -86,10 +86,19 @@ h1, h2, h3, h4{
 	}
 }
 
+.download{
+  width: 100%;
+  background: $blue;
+  color: white;
+  font-size: 40px;
+  &:hover{
+    background-color: darken($blue, 10%);
+  }
+}
+
 footer{
 	width: 100%; 
 	text-align: center;
-	
 }
 
 
