@@ -29,7 +29,7 @@
 	socimar.tint = function(){
 		var color = document.getElementById("js-output").value;
 		socimar.drawImage();
-		socimar.ctx.fillStyle = color;
+		socimar.ctx.fillStyle = socimar.color;
 		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
@@ -69,8 +69,11 @@
 		}
 	}
 
-	socimar.changeColor = function() {
-		
+	socimar.changeColor = function(draw) {
+		socimar.color = document.getElementById("js-output").value;
+		if (draw == true) {
+			socimar.draw();
+		}
 	}
 
 	socimar.draw = function() {
@@ -141,8 +144,9 @@
 	}
 
 	socimar.init = function(){
-		socimar.changeColor();
+		
 		socimar.canvasSetup();
+		socimar.changeColor();
 		socimar.events();
 	}
 
