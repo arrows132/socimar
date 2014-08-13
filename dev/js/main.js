@@ -43,10 +43,12 @@
 	socimar.canvasResize = function(){
 		var newWidth,
 			newHeight;
-		if(socimar.img.width > 700)
+		if(socimar.img.width > 700){
 			newWidth = 700;
-		else
+		}
+		else{
 			newWidth = socimar.img.width;
+		}
 
 		newHeight = (socimar.img.height / socimar.img.width) * newWidth;
 		socimar.canvas.width  = newWidth,
@@ -144,7 +146,6 @@
 	}
 
 	socimar.init = function(){
-		
 		socimar.canvasSetup();
 		socimar.changeColor();
 		socimar.events();
