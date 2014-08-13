@@ -26,6 +26,13 @@
 
 	}
 
+	socimar.tint = function(){
+		var color = document.getElementById("js-output").value;
+		socimar.drawImage();
+		socimar.ctx.fillStyle = color;
+		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
+	}
+
 	socimar.canvasSetup = function(){
 		socimar.canvas = document.getElementById("canvas");
 		socimar.canvas.width  = 700,
@@ -102,7 +109,7 @@
 		$(".main-image").addClass("dragging");;
 	} 
  
-  	socimar.handleFiles = function (e) {
+  	socimar.handleFiles = function(e) {
 		e.stopPropagation();
 		e.preventDefault(); 
     	socimar.loadImage( e.dataTransfer.files );
