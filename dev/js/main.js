@@ -52,7 +52,7 @@
 
 		newHeight = (socimar.img.height / socimar.img.width) * newWidth;
 		socimar.canvas.width  = newWidth,
-	socimar.canvas.height = newHeight;
+		socimar.canvas.height = newHeight;
 
 	}
 
@@ -67,12 +67,35 @@
 		img.onload = function() {
 			socimar.img = img;
 			socimar.canvasResize();
-	  		socimar.drawImage()
+			socimar.draw();
 		}
+	}
+
+	socimar.changeColor = function() {
+		
+	}
+
+	socimar.draw = function() {
+		socimar.drawImage();
+		socimar.tint();
+		socimar.drawText();
 	}
 
 	socimar.drawImage = function() {
 		socimar.ctx.drawImage(socimar.img, 0, 0, socimar.canvas.width, socimar.canvas.height);
+	}
+
+	socimar.tint = function(){
+		socimar.ctx.fillStyle = socimar.color;
+		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
+	}
+
+	socimar.drawText = function(){
+		console.log("drawing text");
+		socimar.ctx.font = largeFont + "px " + socimar.ls.get("font");
+		console.log(largeFont + "px " + socimar.ls.get("font"));
+		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50);
 	}
 
 	socimar.saveImage = function(){
@@ -88,7 +111,7 @@
 		$(".main-image").addClass("dragging");;
 	} 
  
-  	socimar.handleFiles = function (e) {
+  	socimar.handleFiles = function(e) {
 		e.stopPropagation();
 		e.preventDefault(); 
     	socimar.loadImage( e.dataTransfer.files );
@@ -100,14 +123,14 @@
 		if(font == undefined && lsFont == undefined){
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
-			return "font-family: " + defaultFont;
+			return defaultFont;
 		}else if(font !== undefined){
 			socimar.ls.set("font", font);
 			$("#font").attr("placeholder", font);
-			return "font-family: " + font;
+			return font;
 		}else{
 			$("#font").attr("placeholder", lsFont);
-			return "font-family: " + lsFont;	
+			return lsFont;	
 		}
 	}
 
@@ -120,6 +143,7 @@
 	}
 
 	socimar.init = function(){
+		socimar.changeColor();
 		socimar.canvasSetup();
 		socimar.events();
 	}
