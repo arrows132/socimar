@@ -31,6 +31,8 @@
 		socimar.canvas.width  = 700,
 		socimar.canvas.height = 394;
 		socimar.ctx = canvas.getContext("2d");
+		socimar.ctx.fillStyle = "#1a1a1a";
+		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
 	socimar.canvasResize = function(){
@@ -47,9 +49,9 @@
 
 	}
 
-	socimar.loadImage = function(){
+	socimar.loadImage = function(dndImg){
 		console.log("loading image");
-		var file = document.getElementById('BGimage').files[0],
+		var file = dndImg[0],
 				img = new Image(),
 				url = window.URL || window.webkitURL,
 				src = url.createObjectURL(file);
@@ -94,11 +96,21 @@
 		var image  = socimar.canvas.toDataURL().replace( 'image/png', 'image/octet-stream' );
 		download.href = image;
 	}
-	
+
+	socimar.handleDragAndDrop = function(e){
+		e.stopPropagation();
+		e.preventDefault(); 
+		event.dataTransfer.dropEffect = 'copy';
+		$(".main-image").addClass("dragging");;
+	} 
+ 
+  	socimar.handleFiles = function (e) {
+		e.stopPropagation();
+		e.preventDefault(); 
+    	socimar.loadImage( e.dataTransfer.files );
+  	}
 
 	socimar.font = function(font){
-		//on first run it sets open sans as default font. 
-		//However, if you choose another font it saves it for use at a later time.
 		var defaultFont = "Open Sans";
 		var lsFont = socimar.ls.get("font");
 		if(font == undefined && lsFont == undefined){
@@ -118,6 +130,9 @@
 	socimar.events = function(){
 		var download     = document.getElementById('download');
 		download.addEventListener( 'click', socimar.saveImage, false );
+		var dragndrop = document.getElementById( 'draganddrop' );
+    	dragndrop.addEventListener( 'dragover', socimar.handleDragAndDrop, false );
+    	dragndrop.addEventListener( 'drop', socimar.handleFiles, false );
 	}
 
 	socimar.init = function(){

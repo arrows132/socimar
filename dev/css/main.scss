@@ -5,11 +5,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 @mixin transition($type,$time){
-    -webkit-transition: $type $time ease;
-    -moz-transition: $type $time ease;
-    -ms-transition: $type $time ease;
-    -o-transition: $type $time ease;
-    transition: $type $time ease;
+  -webkit-transition: $type $time ease;
+  -moz-transition: $type $time ease;
+  -ms-transition: $type $time ease;
+  -o-transition: $type $time ease;
+  transition: $type $time ease;
 }
 
 ////vars////
@@ -17,27 +17,28 @@ $black: #1a1a1a;
 $white: #02e0fe;      
 $blue: #028697;
 $red: #7f1b0e;
+$lightBlue: #02b0ca;
 
 @mixin body-font(){
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 html{
-    height: 100% !important;
-    width: 100% !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 body {
-    height: 100% !important;
-    width: 100% !important;
-    font-weight: 300;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch; 
-    @include body-font();
+  height: 100% !important;
+  width: 100% !important;
+  font-weight: 300;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch; 
+  @include body-font();
 }
 
 header{
@@ -64,26 +65,11 @@ h1, h2, h3, h4{
     font-weight: 400;
 }
 
-.main-image{
-	padding: 4em;
-	margin: 25px 0;
-	border:5px dashed $red;
-	text-align: center;
-}
 .copyright-logo{
 	padding: 2em;
 	margin: 25px 0;
 	border:2px dashed $red;
 	text-align: center;
-}
-.drag-and-drop{
-	span{
-		color: black;
-		font-size: 20px;
-	}
-	.tiny{
-		font-size: 10px;
-	}
 }
 
 .download{
@@ -94,6 +80,56 @@ h1, h2, h3, h4{
   &:hover{
     background-color: darken($blue, 10%);
   }
+}
+
+.drag-and-drop{
+  span{
+    font-size: 20px;
+  }
+  .tiny{
+    font-size: 10px;
+  }
+}
+
+.main-image {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 4em;
+  margin: 25px;
+  color:$white;
+  font-size: 20px;
+}
+.main-image:hover {
+  color: #0e5082;
+}
+.dragging .dragndrop-background {
+  background-position: 100px 0;
+}
+.dragging .content {
+  background-color: $blue;
+}
+.dragndrop-background,
+.content {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.dragndrop-background {
+  transition: 1200ms;
+  background-color: $blue;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #ffffff 10px, #ffffff 20px);
+  background-size: 30px;
+}
+.content {
+  transition: 200ms;
+  margin: 3px;
+  line-height: 225px;
+  text-align: center;
+  color:#FFF;
+  background-color: $lightBlue;
 }
 
 footer{
