@@ -30,7 +30,6 @@
 				    </div>
 				    <div class="variants" style="display:none"></div>
 				</div>
-				<input onchange="socimar.loadImage()" id="BGimage" type="file">
 				<input oninput="socimar.draw()" id="mainText">
 				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.changeColor();">
 					<input name="r" type="range" min="0" max="255" step="5" value="50"  data-rangeslider class="range">

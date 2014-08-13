@@ -31,8 +31,6 @@
 		socimar.canvas.width  = 700,
 		socimar.canvas.height = 394;
 		socimar.ctx = canvas.getContext("2d");
-		socimar.ctx.fillStyle = "#1a1a1a";
-		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
 	socimar.canvasResize = function(){
