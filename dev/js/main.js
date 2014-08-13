@@ -38,6 +38,9 @@
 		socimar.canvas.width  = 700,
 		socimar.canvas.height = 394;
 		socimar.ctx = canvas.getContext("2d");
+		socimar.drawImage();
+		socimar.tint();
+		socimar.drawText();
 		//socimar.ctx.fillStyle = "#1a1a1a";
 		//socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
@@ -78,10 +81,15 @@
 		}
 	}
 
+	//the init for canvas
 	socimar.draw = function() {
-		socimar.drawImage();
-		socimar.tint();
-		socimar.drawText();
+		socimar.clearCanvas();
+	}
+	socimar.clearCanvas = function(){
+		socimar.ctx.save();
+		socimar.ctx.clearRect( 0, 0, canvas.width, canvas.height );
+		socimar.ctx.restore();
+		socimar.canvasSetup();
 	}
 
 	socimar.drawImage = function() {
@@ -95,8 +103,8 @@
 
 	socimar.drawText = function(){
 		console.log("drawing text");
-		socimar.ctx.font = largeFont + "px " + socimar.ls.get("font");
-		console.log(largeFont + "px " + socimar.ls.get("font"));
+		socimar.ctx.font = largeFont + "px " + socimar.font.current;
+		console.log(largeFont + "px " + socimar.font.current);
 		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50);
 	}
@@ -128,18 +136,20 @@
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
 			$(".font").css("font-family", defaultFont);
-			return defaultFont;
+			var returnText = defaultFont;
 		}else if(font !== undefined){
 			socimar.ls.set("font", font);
 			$("#font").attr("placeholder", font);
 			$(".font").css("font-family", font);
-			return font;
+			var returnText = font;
 		}else{
 			$("#font").attr("placeholder", lsFont);
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			$(".font").css("font-family", lsFont);
-			return lsFont;	
+			var returnText = lsFont;	
 		}
+		socimar.draw();
+		socimar.font.current = returnText;
 	}
 
 	socimar.events = function(){
@@ -148,6 +158,9 @@
 		var dragndrop = document.getElementById( 'draganddrop' );
     	dragndrop.addEventListener( 'dragover', socimar.handleDragAndDrop, false );
     	dragndrop.addEventListener( 'drop', socimar.handleFiles, false );
+    	var dndcanvas = document.getElementById( 'canvas' );
+    	dndcanvas.addEventListener( 'dragover', socimar.handleDragAndDrop, false );
+    	dndcanvas.addEventListener( 'drop', socimar.handleFiles, false );
 	}
 
 	socimar.init = function(){
@@ -192,6 +205,7 @@
 		updater:function (item) {
 			runFont(item);
 			$("#font").attr("placeholder",item);
+			socimar.draw();
 		}
 	});
 
@@ -204,6 +218,7 @@
 			$(".gf-link").remove();
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			socimar.font(family);
+			socimar.draw();
 			$(".font").css("font-family", family);
 			if($(".variants").text().match('italic')){
 			  $("em").css("font-style","italic");
@@ -226,10 +241,11 @@
 			var family = type.family;
 			$("#font").attr("placeholder", family);
 			runFont(family);
+			socimar.draw();
 		  }
 		});
 	  });
-	  $(".heart").removeClass("active");
+	  
 	}
 
 	$(".random").click(function(){
