@@ -28,15 +28,50 @@
 
 	socimar.tint = function(){
 		var color = document.getElementById("js-output").value;
+		socimar.drawImage();
+
 		socimar.ctx.fillStyle = color;
-		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height)
+		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
 	socimar.canvasSetup = function(){
 		socimar.canvas 				= document.getElementById("canvas");
     	socimar.canvas.width  = 700,
-   		socimar.canvas.height = 450;
+   		socimar.canvas.height = 394;
    		socimar.ctx 	= canvas.getContext("2d");
+	}
+
+	socimar.canvasResize = function(){
+		var newWidth,
+				newHeight;
+		if(socimar.img.width > 700)
+			newWidth = 700;
+		else
+			newWidth = socimar.img.width;
+
+		newHeight = (socimar.img.height / socimar.img.width) * newWidth;
+		socimar.canvas.width  = newWidth,
+   	socimar.canvas.height = newHeight;
+
+	}
+
+	socimar.loadImage = function(){
+		console.log("loading image");
+		var file = document.getElementById('BGimage').files[0],
+				img = new Image(),
+				url = window.URL || window.webkitURL,
+				src = url.createObjectURL(file);
+
+		img.src = src;
+		img.onload = function() {
+			socimar.img = img;
+			socimar.canvasResize();
+      socimar.drawImage()
+    }
+	}
+
+	socimar.drawImage = function() {
+		socimar.ctx.drawImage(socimar.img, 0, 0, socimar.canvas.width, socimar.canvas.height);
 	}
 
 	socimar.font = function(font){
@@ -60,7 +95,6 @@
 
 	socimar.init = function(string){
 		socimar.canvasSetup();
-		socimar.tint("rgba(200,0,200,0.53)");
 	}
 
 
