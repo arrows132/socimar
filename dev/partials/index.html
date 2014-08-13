@@ -31,11 +31,19 @@
 				    <div class="variants" style="display:none"></div>
 				</div>
 				<input oninput="socimar.draw()" id="mainText">
+<<<<<<< HEAD
+				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.changeColor();">
+					<input name="r" type="range" min="0" max="255" step="5" value="50"   data-range class="range">
+					<input name="g" type="range" min="0" max="255" step="5" value="100"  data-range class="range">	
+					<input name="b" type="range" min="0" max="255" step="5" value="150"  data-range class="range">	
+					<input name="a" type="range" min="0" max="1" step=".02" value=".45"  data-range class="range">	
+=======
 				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.changeColor(true);">
 					<input name="r" type="range" min="0" max="255" step="5" value="50"  data-rangeslider class="range">
 					<input name="g" type="range" min="0" max="255" step="5" value="100"  data-rangeslider class="range">	
 					<input name="b" type="range" min="0" max="255" step="5" value="150"  data-rangeslider class="range">	
 					<input name="a" type="range" min="0" max="1" step=".02" value=".45"  data-rangeslider class="range">	
+>>>>>>> c47b8361fa90ae8163f3cbfc4e11e7d9e4d2d32d
 					<output name="result" id="js-output">rgba(35,100,150,0.46)</output>
 				</form>
 				<div class="drag-and-drop copyright-logo">
