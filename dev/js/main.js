@@ -38,8 +38,8 @@
 		socimar.canvas.width  = 700,
 		socimar.canvas.height = 394;
 		socimar.ctx = canvas.getContext("2d");
-		socimar.ctx.fillStyle = "#1a1a1a";
-		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
+		//socimar.ctx.fillStyle = "#1a1a1a";
+		//socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
 	socimar.canvasResize = function(){
@@ -71,8 +71,11 @@
 		}
 	}
 
-	socimar.changeColor = function() {
-		
+	socimar.changeColor = function(draw) {
+		socimar.color = document.getElementById("js-output").value;
+		if (draw == true) {
+			socimar.draw();
+		}
 	}
 
 	socimar.draw = function() {
@@ -120,16 +123,21 @@
 	socimar.font = function(font){
 		var defaultFont = "Open Sans";
 		var lsFont = socimar.ls.get("font");
+		var familyCSS = "http://fonts.googleapis.com/css?family=" + lsFont + "";   
 		if(font == undefined && lsFont == undefined){
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
+			$(".font").css("font-family", defaultFont);
 			return defaultFont;
 		}else if(font !== undefined){
 			socimar.ls.set("font", font);
 			$("#font").attr("placeholder", font);
+			$(".font").css("font-family", font);
 			return font;
 		}else{
 			$("#font").attr("placeholder", lsFont);
+			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
+			$(".font").css("font-family", lsFont);
 			return lsFont;	
 		}
 	}
@@ -195,6 +203,7 @@
 			$(".gf-link").remove();
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			socimar.font(family);
+			$(".font").css("font-family", family);
 			if($(".variants").text().match('italic')){
 			  $("em").css("font-style","italic");
 			}
