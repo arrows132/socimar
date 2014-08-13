@@ -29,7 +29,7 @@
 	socimar.tint = function(){
 		var color = document.getElementById("js-output").value;
 		socimar.drawImage();
-		socimar.ctx.fillStyle = color;
+		socimar.ctx.fillStyle = socimar.color;
 		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
@@ -151,8 +151,9 @@
 	}
 
 	socimar.init = function(){
-		socimar.changeColor();
+		
 		socimar.canvasSetup();
+		socimar.changeColor();
 		socimar.events();
 	}
 
