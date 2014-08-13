@@ -26,23 +26,11 @@
 
 	}
 
-	socimar.tint = function(){
-		var color = document.getElementById("js-output").value;
-		socimar.drawImage();
-		socimar.ctx.fillStyle = socimar.color;
-		socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
-	}
-
 	socimar.canvasSetup = function(){
 		socimar.canvas = document.getElementById("canvas");
 		socimar.canvas.width  = 700,
 		socimar.canvas.height = 394;
 		socimar.ctx = canvas.getContext("2d");
-		socimar.drawImage();
-		socimar.tint();
-		socimar.drawText();
-		//socimar.ctx.fillStyle = "#1a1a1a";
-		//socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 	}
 
 	socimar.canvasResize = function(){
@@ -62,7 +50,7 @@
 	}
 
 	socimar.loadImage = function(dndImg){
-		console.log("loading image");
+		console.log("loading image...");
 		var file = dndImg[0],
 				img = new Image(),
 				url = window.URL || window.webkitURL,
@@ -70,6 +58,7 @@
 
 		img.src = src;
 		img.onload = function() {
+			console.log("Image loaded!");
 			socimar.img = img;
 			socimar.canvasResize();
 			socimar.draw();
@@ -85,13 +74,23 @@
 
 	//the init for canvas
 	socimar.draw = function() {
+		if(socimar.img == undefined){
+			socimar.ctx.fillStyle = "rgb(2, 176, 202)";
+			socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
+			socimar.ctx.textAlign = 'center';
+			socimar.ctx.font = largeFont + "px Open Sans";
+			socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+			socimar.ctx.fillText("upload image to begin.", canvas.width / 2, 80);
+			return 0;
+		}
 		socimar.clearCanvas();
+		socimar.drawImage();
+		socimar.tint();
+		socimar.drawText();
 	}
+	
 	socimar.clearCanvas = function(){
-		socimar.ctx.save();
 		socimar.ctx.clearRect( 0, 0, canvas.width, canvas.height );
-		socimar.ctx.restore();
-		socimar.canvasSetup();
 	}
 
 	socimar.drawImage = function() {
@@ -104,9 +103,7 @@
 	}
 
 	socimar.drawText = function(){
-		console.log("drawing text");
 		socimar.ctx.font = largeFont + "px " + socimar.font.current;
-		console.log(largeFont + "px " + socimar.font.current);
 		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50);
 	}
