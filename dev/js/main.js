@@ -116,14 +116,14 @@
 		if(font == undefined && lsFont == undefined){
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
-			return "font-family: " + defaultFont;
+			return defaultFont;
 		}else if(font !== undefined){
 			socimar.ls.set("font", font);
 			$("#font").attr("placeholder", font);
-			return "font-family: " + font;
+			return font;
 		}else{
 			$("#font").attr("placeholder", lsFont);
-			return "font-family: " + lsFont;	
+			return lsFont;	
 		}
 	}
 
