@@ -80,13 +80,14 @@
 			socimar.ctx.textAlign = 'center';
 			socimar.ctx.font = largeFont + "px Open Sans";
 			socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
-			socimar.ctx.fillText("upload image to begin.", canvas.width / 2, 80);
+			socimar.ctx.fillText("upload image \r to begin.", canvas.width / 2, 80);
 			return 0;
 		}
 		socimar.clearCanvas();
 		socimar.drawImage();
 		socimar.tint();
 		socimar.drawText();
+		console.log(socimar.ctx.font);
 	}
 	
 	socimar.clearCanvas = function(){
@@ -105,7 +106,10 @@
 	socimar.drawText = function(){
 		socimar.ctx.font = largeFont + "px " + socimar.font.current;
 		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
-		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50);
+		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50, socimar.canvas.width);
+	}
+
+	socimar.drawText.setLineheight = function(){
 	}
 
 	socimar.saveImage = function(){
@@ -147,8 +151,10 @@
 			$(".font").css("font-family", lsFont);
 			var returnText = lsFont;	
 		}
-		socimar.draw();
 		socimar.font.current = returnText;
+		socimar.draw();
+		console.log(familyCSS);
+
 	}
 
 	socimar.events = function(){
