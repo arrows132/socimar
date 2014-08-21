@@ -38,8 +38,7 @@
 			newHeight;
 		if(socimar.img.width > 700){
 			newWidth = 700;
-		}
-		else{
+		} else {
 			newWidth = socimar.img.width;
 		}
 
