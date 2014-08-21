@@ -155,7 +155,7 @@
 		lineHeight = socimar.settings.lineHeight,
 		maxWidth = socimar.canvas.width-(margins[1]+margins[2]),
 		text = document.getElementById("mainText").value,
-		textWidth = socimar.ctx.measureText(text).width;
+		textWidth = socimar.ctx.measureText(text).width,
 		lines = [],
 		line = margins[0]+lineHeight,
 		words,
@@ -170,6 +170,9 @@
 				if(socimar.ctx.measureText(words.slice(lastSlice, parseInt(i)+1).join(" ")).width > maxWidth){
 					lines.push(words.slice(lastSlice, i).join(" "));
 					lastSlice = i;
+				}
+				if(parseInt(i)+1 == words.length) {
+					lines.push(words.slice(lastSlice).join(" "));
 				}
 			}
 
