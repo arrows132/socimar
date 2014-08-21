@@ -39,11 +39,27 @@
 		},
 		fontSetter:function(number){
 			socimar.ls.set("fontSize", number);
-			return this.fontSize();
+			return socimar.settings.fontSize();
 			socimar.draw();
 		},
 		lineHeight: this.fontSize*1.20,
-		textAlign: "left",
+		textAlign: function(){
+			var textAlignSaved = socimar.ls.get("textAlign");
+			if(textAlignSaved == undefined){
+				var textAlign = "left"; 
+				return textAlign;
+				socimar.draw();
+			}else{
+				var textAlign = textAlignSaved; 
+				return textAlign;
+				socimar.draw();
+			};
+		},
+		textAlignSetter:function(side){
+			socimar.ls.set("textAlign", side);
+			return socimar.settings.textAlignSetter();
+			socimar.draw();
+		},
 		margin: [10,10,10],
 		textColor:"rgba(255, 255, 255, 1)"
 	};
@@ -137,8 +153,6 @@
 		maxWidth = socimar.canvas.width-(margins[1]+margins[2]),
 		text = document.getElementById("mainText").value,
 		textWidth = socimar.ctx.measureText(text).width;
-		textHeight = socimar.ctx.measureText(text).height;
-		console.log(textHeight);
 		if(textWidth < maxWidth){
 			socimar.ctx.fillText(text, margins[1], 50);
 		} else {
@@ -165,7 +179,7 @@
     	socimar.loadImage( e.dataTransfer.files );
   	}
 
-	socimar.font = function(font){
+	socimar.font = function(){
 		var defaultFont = "Open Sans";
 		var lsFont = socimar.ls.get("font");
 		if(font == undefined && lsFont == undefined){
@@ -185,6 +199,7 @@
 			var returnText = lsFont;
 		}
 		socimar.font.current = returnText;
+
 	}
 
 	socimar.font.change = function(font){
@@ -194,7 +209,11 @@
 		socimar.ls.set("font", font);
 		$("#font").attr("placeholder", font);
 		$(".font").css("font-family", font);
-		socimar.draw();
+		setTimeout(function(){
+			socimar.draw();
+			console.log("font Change!!");
+			$(".canvas-holder").removeClass("visible");
+		},2000)
 		socimar.font.current = font;
 	}
 
@@ -220,6 +239,7 @@
 		socimar.canvasSetup();
 		socimar.changeColor();
 		socimar.events();
+		socimar.draw();
 	}
 
 	socimar.init();
@@ -257,6 +277,7 @@
 		updater:function (item) {
 			runFont(item);
 			$("#font").attr("placeholder",item);
+			$(".canvas-holder").addClass("visible");
 			socimar.draw();
 		}
 	});
@@ -290,4 +311,5 @@
 
 	$(".random").click(function(){
 	  random();
+	  $(".canvas-holder").addClass("visible");
 	});

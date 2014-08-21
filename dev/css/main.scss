@@ -299,11 +299,44 @@ background:adjust-hue($blue,220deg);
 }
 
 }
-.visible{
+canvas{
+  display: block;
+  margin: 0 auto;
+}
+.canvas-holder{
+  position: relative;
   display: block;
 }
-.spinner {
+.visible{
+  display: block!important;
+}
+.visible .spinner-wrapper,
+.visible .overlay{
+  display: block!important;
+}
+.overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
   display: none;
+  z-index: 998;
+  background-color: rgba(1, 91, 101, 0.9);
+}
+.spinner-wrapper{
+  display: none;
+  width: 100%;
+  min-height: 100%;
+  z-index: 999;
+  background-color: rgba(1, 91, 101, 0.5);
+}
+.spinner {
+  z-index: 1000;
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-left:-32.5px;
+  margin-top:-32.5px;
+  display: block;
   -webkit-animation: rotator 1.4s linear infinite;
   animation: rotator 1.4s linear infinite;
 }
