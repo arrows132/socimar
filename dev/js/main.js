@@ -19,6 +19,7 @@
 		},
 		clear:function(){
 			store.clear()
+			console.log("%c" + "Clearing Data", "color:red;");
 		}
 
 	}
@@ -114,6 +115,7 @@
 		socimar.drawImage();
 		socimar.tint();
 		socimar.drawText();
+		socimar.font();
 	}
 	
 	socimar.clearCanvas = function(){
@@ -181,10 +183,11 @@
   	}
 
 	socimar.font = function(font){
-		var defaultFont = "Open+Sans";
+		var defaultFont = "Open Sans";
 		var lsFont = socimar.ls.get("font");
 		if(font == undefined && lsFont == undefined){
-			var familyCSS = "http://fonts.googleapis.com/css?family=" + defaultFont + "";
+			var familyPlus = defaultFont.replace(/\s/g, '+');
+			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");   
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
@@ -199,7 +202,6 @@
 			var returnText = lsFont;
 		}
 		socimar.font.current = returnText;
-		socimar.draw();
 	}
 
 	socimar.font.change = function(font){
@@ -213,6 +215,11 @@
 		socimar.font.current = font;
 	}
 
+	socimar.clearAll = function(){
+		socimar.ls.clear();
+		socimar.draw();
+	}
+
 	socimar.events = function(){
 		var download     = document.getElementById('download');
 		download.addEventListener( 'click', socimar.saveImage, false );
@@ -222,6 +229,8 @@
     	var dndcanvas = document.getElementById( 'canvas' );
     	dndcanvas.addEventListener( 'dragover', socimar.handleDragAndDrop, false );
     	dndcanvas.addEventListener( 'drop', socimar.handleFiles, false );
+    	var clearSettings = document.getElementById("btn-clear");
+    	clearSettings.addEventListener('click', socimar.clearAll, false);
 	}
 
 	socimar.init = function(){
