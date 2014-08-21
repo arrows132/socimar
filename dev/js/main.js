@@ -81,13 +81,13 @@
 			socimar.ctx.font = largeFont + "px Open Sans";
 			socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 			socimar.ctx.fillText("upload image \r to begin.", canvas.width / 2, 80);
+			socimar.drawText.setLineheight();
 			return 0;
 		}
 		socimar.clearCanvas();
 		socimar.drawImage();
 		socimar.tint();
 		socimar.drawText();
-		console.log(socimar.ctx.font);
 	}
 	
 	socimar.clearCanvas = function(){
@@ -106,10 +106,46 @@
 	socimar.drawText = function(){
 		socimar.ctx.font = largeFont + "px " + socimar.font.current;
 		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
-		socimar.ctx.fillText(document.getElementById("mainText").value, 0, 50, socimar.canvas.width);
+		$(socimar.lines).each(function(key, data){
+			console.log("drawing");
+			socimar.ctx.fillText(data, 0,(socimar.lineHeight*(key+1)));
+		});
+
 	}
 
 	socimar.drawText.setLineheight = function(){
+		var fontSize = parseInt(socimar.ctx.font.split("px")[0]);
+		socimar.lineHeight = fontSize*1.20;
+	}
+
+	socimar.drawText.parseText = function(){
+		var text = document.getElementById("mainText").value
+		textWidth = socimar.ctx.measureText(text).width,
+		maxWidth = socimar.canvas.width*.90;
+		socimar.text = text;
+		if(textWidth > maxWidth){
+			socimar.drawText.formatText("word");
+		} else {
+			socimar.lines = [text,"fdslkjfalsdfjklasjkdf","fsdalfdsajklkjdsl"];
+		}
+		socimar.draw();
+	}
+
+	socimar.drawText.formatText = function(type){
+		if(type == "word"){
+			var words = socimar.text.split(" ");
+			console.log(words);
+			if(words.length == 1) {
+				socimar.drawText.formatText("break-word");
+				return 0;
+			}
+
+		}
+
+		if(type == "break-word"){
+
+		}
+
 	}
 
 	socimar.saveImage = function(){
