@@ -1,8 +1,5 @@
 	var socimar = socimar || {};
-	
-	var smallFont = 15,
-		mediumFont = 25,
-		largeFont = 40;
+
 
 	//ls == localStorage namespace
 	socimar.ls = {
@@ -25,6 +22,14 @@
 		}
 
 	}
+
+	socimar.settings = {
+		fontSize: 40,
+		lineHeight: this.fontSize*1.20,
+		textAlign: "left",
+		margin: [10,10,10],
+		textColor:"rgba(255, 255, 255, 1)"
+	};
 
 	socimar.canvasSetup = function(){
 		socimar.canvas = document.getElementById("canvas");
@@ -71,16 +76,14 @@
 		}
 	}
 
-	//the init for canvas
 	socimar.draw = function() {
 		if(socimar.img == undefined){
 			socimar.ctx.fillStyle = "rgb(2, 176, 202)";
 			socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 			socimar.ctx.textAlign = 'center';
-			socimar.ctx.font = largeFont + "px Open Sans";
+			socimar.ctx.font = socimar.settings.fontSize + "px Open Sans";
 			socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 			socimar.ctx.fillText("upload image \r to begin.", canvas.width / 2, 80);
-			socimar.drawText.setLineheight();
 			return 0;
 		}
 		socimar.clearCanvas();
@@ -103,48 +106,18 @@
 	}
 
 	socimar.drawText = function(){
-		socimar.ctx.font = largeFont + "px " + socimar.font.current;
-		socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
-		$(socimar.lines).each(function(key, data){
-			console.log("drawing");
-			socimar.ctx.fillText(data, 0,(socimar.lineHeight*(key+1)));
-		});
-
-	}
-
-	socimar.drawText.setLineheight = function(){
-		var fontSize = parseInt(socimar.ctx.font.split("px")[0]);
-		socimar.lineHeight = fontSize*1.20;
-	}
-
-	socimar.drawText.parseText = function(){
-		var text = document.getElementById("mainText").value
-		textWidth = socimar.ctx.measureText(text).width,
-		maxWidth = socimar.canvas.width*.90;
-		socimar.text = text;
-		if(textWidth > maxWidth){
-			socimar.drawText.formatText("word");
+		socimar.ctx.font = socimar.settings.fontSize + "px " + socimar.font.current;
+		socimar.ctx.fillStyle = socimar.settings.textColor;
+		var margins = socimar.settings.margin,
+		maxWidth = socimar.canvas.width-(margins[1]+margins[2]),
+		text = document.getElementById("mainText").value,
+		textWidth = socimar.ctx.measureText(text).width;
+		
+		if(textWidth < maxWidth){
+			socimar.ctx.fillText(text, margins[1], margins[0]+socimar.settings.fontSize);
 		} else {
-			socimar.lines = [text,"fdslkjfalsdfjklasjkdf","fsdalfdsajklkjdsl"];
+			text.split(" ");
 		}
-		socimar.draw();
-	}
-
-	socimar.drawText.formatText = function(type){
-		if(type == "word"){
-			var words = socimar.text.split(" ");
-			console.log(words);
-			if(words.length == 1) {
-				socimar.drawText.formatText("break-word");
-				return 0;
-			}
-
-		}
-
-		if(type == "break-word"){
-
-		}
-
 	}
 
 	socimar.saveImage = function(){
