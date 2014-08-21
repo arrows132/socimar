@@ -167,10 +167,12 @@
   	}
 
 	socimar.font = function(font){
-		var defaultFont = "Open Sans";
+		var defaultFont = "Open+Sans";
 		var lsFont = socimar.ls.get("font");
-		var familyCSS = "http://fonts.googleapis.com/css?family=" + lsFont + "";   
+		console.log(font);
 		if(font == undefined && lsFont == undefined){
+			var familyCSS = "http://fonts.googleapis.com/css?family=" + defaultFont + "";
+			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");   
 			socimar.ls.set("font", defaultFont);
 			$("#font").attr("placeholder", defaultFont);
 			$(".font").css("font-family", defaultFont);
@@ -178,18 +180,26 @@
 		}else if(font !== undefined){
 			socimar.ls.set("font", font);
 			$("#font").attr("placeholder", font);
+			var familyPlus = font.replace(/\s/g, '+');
+			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";   
+			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			$(".font").css("font-family", font);
 			var returnText = font;
+			console.log("call1");
 		}else{
 			$("#font").attr("placeholder", lsFont);
+			var familyPlus = lsFont.replace(/\s/g, '+');
+			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";   
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			$(".font").css("font-family", lsFont);
 			var returnText = lsFont;	
+			console.log("call2");
 		}
 		socimar.font.current = returnText;
-		socimar.draw();
 		console.log(familyCSS);
-
+		setTimeout(function(){
+			socimar.draw();
+		}, 200)
 	}
 
 	socimar.events = function(){
