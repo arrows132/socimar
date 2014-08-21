@@ -24,7 +24,23 @@
 	}
 
 	socimar.settings = {
-		fontSize: 40,
+		fontSize:function(){
+			var savedFontSize = socimar.ls.get("fontSize");
+			if(savedFontSize == undefined){
+				var fontSize = 40; 
+				return fontSize;
+				socimar.draw();
+			}else{
+				var fontSize = savedFontSize; 
+				return fontSize;
+				socimar.draw();
+			};
+		},
+		fontSetter:function(number){
+			socimar.ls.set("fontSize", number);
+			return this.fontSize();
+			socimar.draw();
+		},
 		lineHeight: this.fontSize*1.20,
 		textAlign: "left",
 		margin: [10,10,10],
@@ -76,12 +92,19 @@
 		}
 	}
 
+	socimar.changeFontSize = function() {
+		var fontSize = document.getElementById("font-size").value;
+		socimar.settings.fontSetter(fontSize);
+		socimar.draw();
+	}
+
 	socimar.draw = function() {
+		console.log("Drawing");
 		if(socimar.img == undefined){
 			socimar.ctx.fillStyle = "rgb(2, 176, 202)";
 			socimar.ctx.fillRect(0,0,socimar.canvas.width,socimar.canvas.height);
 			socimar.ctx.textAlign = 'center';
-			socimar.ctx.font = socimar.settings.fontSize + "px Open Sans";
+			socimar.ctx.font = socimar.settings.fontSize() + "px Open Sans";
 			socimar.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 			socimar.ctx.fillText("upload image \r to begin.", canvas.width / 2, 80);
 			return 0;
@@ -106,15 +129,16 @@
 	}
 
 	socimar.drawText = function(){
-		socimar.ctx.font = socimar.settings.fontSize + "px " + socimar.font.current;
+		socimar.ctx.font = socimar.settings.fontSize() + "px " + socimar.font.current;
 		socimar.ctx.fillStyle = socimar.settings.textColor;
 		var margins = socimar.settings.margin,
 		maxWidth = socimar.canvas.width-(margins[1]+margins[2]),
 		text = document.getElementById("mainText").value,
 		textWidth = socimar.ctx.measureText(text).width;
-		
+		textHeight = socimar.ctx.measureText(text).height;
+		console.log(textHeight);
 		if(textWidth < maxWidth){
-			socimar.ctx.fillText(text, margins[1], margins[0]+socimar.settings.fontSize);
+			socimar.ctx.fillText(text, margins[1], 50);
 		} else {
 			text.split(" ");
 		}
@@ -142,7 +166,6 @@
 	socimar.font = function(font){
 		var defaultFont = "Open+Sans";
 		var lsFont = socimar.ls.get("font");
-		console.log(font);
 		if(font == undefined && lsFont == undefined){
 			var familyCSS = "http://fonts.googleapis.com/css?family=" + defaultFont + "";
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");   
@@ -150,29 +173,27 @@
 			$("#font").attr("placeholder", defaultFont);
 			$(".font").css("font-family", defaultFont);
 			var returnText = defaultFont;
-		}else if(font !== undefined){
-			socimar.ls.set("font", font);
-			$("#font").attr("placeholder", font);
-			var familyPlus = font.replace(/\s/g, '+');
-			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";   
-			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
-			$(".font").css("font-family", font);
-			var returnText = font;
-			console.log("call1");
 		}else{
 			$("#font").attr("placeholder", lsFont);
 			var familyPlus = lsFont.replace(/\s/g, '+');
 			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";   
 			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
 			$(".font").css("font-family", lsFont);
-			var returnText = lsFont;	
-			console.log("call2");
+			var returnText = lsFont;
 		}
 		socimar.font.current = returnText;
-		console.log(familyCSS);
-		setTimeout(function(){
-			socimar.draw();
-		}, 200)
+		socimar.draw();
+	}
+
+	socimar.font.change = function(font){
+		var familyPlus = font.replace(/\s/g, '+');
+		var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + "";   
+		$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
+		socimar.ls.set("font", font);
+		$("#font").attr("placeholder", font);
+		$(".font").css("font-family", font);
+		socimar.draw();
+		socimar.font.current = font;
 	}
 
 	socimar.events = function(){
@@ -235,20 +256,8 @@
 	  $.getJSON(url,function(json){
 		$.each(json.items,function(i,type){
 		  if (type.family === family) {
-			var familyPlus = family.replace(/\s/g, '+');
-			var familyCSS = "http://fonts.googleapis.com/css?family=" + familyPlus + ":" + type.variants + "";        
-			$(".gf-link").remove();
-			$("head").append("<link href='"+ familyCSS +"' rel='stylesheet' type='text/css' class='gf-link'>");
-			socimar.font(family);
+			socimar.font.change(family);
 			socimar.draw();
-			$(".font").css("font-family", family);
-			if($(".variants").text().match('italic')){
-			  $("em").css("font-style","italic");
-			}
-			if($(".variants").text().match('700')){
-			  $("strong,h1,h2,h3").css("font-weight","700");
-			}
-	 
 		  }
 		});
 	  });
