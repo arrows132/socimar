@@ -234,7 +234,7 @@
   		if(increment == true){
   			var isSet = socimar.ls.get("increment");
   			if(isSet == undefined){
-  				socimar.ls.set("increment", 1);
+  				socimar.ls.set("increment", 0);
   			}else{
   				socimar.ls.set("increment", isSet);
   				socimar.ls.set("fileName", text);
