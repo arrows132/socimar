@@ -38,6 +38,7 @@
 				    				</div>
 				<input oninput="socimar.draw()" id="mainText">Text
 				<input oninput="socimar.changeFontSize()" id="font-size">Text Size
+				<input oninput="socimar.source()" id="font-size" value="Source:">Source
 				<form oninput="result.value='rgba(' + r.value + ',' + g.value + ',' + b.value + ',' + a.value + ')'; socimar.changeColor(true);">
 					<input name="r" type="range" min="0" max="255" step="5" value="50"  data-rangeslider class="range">
 					<input name="g" type="range" min="0" max="255" step="5" value="100"  data-rangeslider class="range">	
@@ -65,7 +66,9 @@
         <h4 class="modal-title" >Settings menu</h4>
       </div>
       	<div class="modal-body">
-        	<div class="btn btn-danger btn-clear" id="btn-clear">Reset All Settings</div> 
+        	<div class="btn btn-danger btn-clear" id="btn-clear">Reset All Settings</div> <br><br>
+        	<input oninput="socimar.changeDownloadFile()" id="changeDownloadFile">File Name
+        	<input type="checkbox" name="increment" id="increment" value="true"> Increment File Name
       	</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

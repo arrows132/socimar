@@ -62,7 +62,19 @@
 		},
 		lineHeight: 0,
 		margin: [10,10,10],
-		textColor:"rgba(255, 255, 255, 1)"
+		textColor:"rgba(255, 255, 255, 1)",
+		fileName:function(){
+			var fileNameSaved = socimar.ls.get("fileName");
+			var incrementSaved = socimar.ls.get("increment");
+			if(incrementSaved == undefined){increment = 0}else{increment = incrementSaved};
+			if(fileNameSaved == undefined){
+				var fileName = "socimar.jpg";
+				return fileName;
+			}else{
+				var fileName = fileNameSaved + "-" + increment + ".jpg";
+				return fileName;
+			};
+		}
 	};
 	socimar.settings.lineHeight = socimar.settings.fontSize()*1.20;
 
