@@ -67,13 +67,18 @@
 		fileName:function(){
 			var fileNameSaved = socimar.ls.get("fileName");
 			var incrementSaved = socimar.ls.get("increment");
-			if(incrementSaved == undefined){increment = 0}else{increment = incrementSaved};
 			if(fileNameSaved == undefined){
 				var fileName = "socimar.jpg";
 				return fileName;
 			}else{
-				var fileName = fileNameSaved + "-" + increment + ".jpg";
-				return fileName;
+				if(incrementSaved == undefined){
+					var fileName = fileNameSaved + ".jpg";
+					return fileName;
+				}else{
+					var fileName = fileNameSaved + "-" + incrementSaved + ".jpg";
+					return fileName;
+				};
+				
 			};
 		}
 	};
@@ -205,6 +210,9 @@
 		console.log("saving image");
 		var image  = socimar.canvas.toDataURL().replace( 'image/png', 'image/octet-stream' );
 		download.href = image;
+		var a = document.getElementById("download");
+		a.download = socimar.settings.fileName();
+		socimar.addIncrement();
 	}
 
 	socimar.handleDragAndDrop = function(e){
@@ -218,6 +226,54 @@
 		e.stopPropagation();
 		e.preventDefault(); 
     	socimar.loadImage( e.dataTransfer.files );
+  	}
+
+  	socimar.changeDownloadFile = function(){
+  		var increment = document.getElementById("increment").checked;
+  		var text = document.getElementById("changeDownloadFile").value;
+  		if(increment == true){
+  			var isSet = socimar.ls.get("increment");
+  			if(isSet == undefined){
+  				socimar.ls.set("increment", 1);
+  			}else{
+  				socimar.ls.set("increment", isSet);
+  				socimar.ls.set("fileName", text);
+  			}
+  		}else{
+  			socimar.ls.set("fileName", text);
+  			socimar.ls.set("increment", undefined);
+  		}
+  	}
+
+  	socimar.addIncrement = function(){
+  		var increment = document.getElementById("increment").checked;
+		if(increment == true){
+			var incrementSaved = socimar.ls.get("increment");
+			if(incrementSaved == undefined){incrementSaved = 0}
+			var increment = incrementSaved + 1;
+			socimar.ls.set("increment", increment);
+		}
+  	}
+
+  	socimar.resetIncrement = function(){
+  		socimar.ls.set("increment", undefined);
+  	}
+
+  	socimar.setUpDefaults = function(){
+  		//Download Text
+  		var textSet = socimar.ls.get("fileName");
+  		if(textSet != undefined){document.getElementById("changeDownloadFile").value = socimar.ls.get("fileName");}else{document.getElementById("changeDownloadFile").value = "Enter File Name"};
+
+  		//increment
+  		var increment = socimar.ls.get("increment");
+  		if(increment > 0){
+  			document.getElementById("increment").checked = true;
+  		}else{
+  			document.getElementById("increment").checked = false;
+  		}
+
+  		//Font Size
+  		document.getElementById("font-size").value = socimar.settings.fontSize();
   	}
 
 	socimar.font = function(){
@@ -260,7 +316,7 @@
 
 	socimar.clearAll = function(){
 		socimar.ls.clear();
-		socimar.draw();
+		socimar.init();
 	}
 
 	socimar.events = function(){
@@ -274,6 +330,8 @@
     	dndcanvas.addEventListener( 'drop', socimar.handleFiles, false );
     	var clearSettings = document.getElementById("btn-clear");
     	clearSettings.addEventListener('click', socimar.clearAll, false);
+    	var clearIncrement = document.getElementById("clear-incr");
+    	clearIncrement.addEventListener('click', socimar.resetIncrement, false);
 	}
 
 	socimar.init = function(){
@@ -281,6 +339,8 @@
 		socimar.changeColor();
 		socimar.events();
 		socimar.draw();
+		socimar.settings.fileName();
+		socimar.setUpDefaults();
 	}
 
 	socimar.init();

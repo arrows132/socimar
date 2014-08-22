@@ -68,7 +68,8 @@
       	<div class="modal-body">
         	<div class="btn btn-danger btn-clear" id="btn-clear">Reset All Settings</div> <br><br>
         	<input oninput="socimar.changeDownloadFile()" id="changeDownloadFile">File Name
-        	<input type="checkbox" name="increment" id="increment" value="true"> Increment File Name
+        	<input type="checkbox" oninput="socimar.changeDownloadFile()" name="increment" id="increment"> Increment File Name
+        	<button id="clear-incr">Clear Incr</button>
       	</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
