@@ -319,8 +319,8 @@
 			runFont(item);
 			$("#font").attr("placeholder",item);
 			$(".canvas-holder").addClass("visible");
-			var loaderWidth = $("canvas").width();
-	  		$(".overlay").css("height", loaderWidth);
+			var loaderWidth = $("canvas").width() + 6;
+	  		$(".overlay").css("width", loaderWidth);
 			socimar.draw();
 		}
 	});
