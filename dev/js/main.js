@@ -301,6 +301,8 @@
 			runFont(item);
 			$("#font").attr("placeholder",item);
 			$(".canvas-holder").addClass("visible");
+			var loaderWidth = $("canvas").width();
+	  		$(".overlay").css("height", loaderWidth);
 			socimar.draw();
 		}
 	});
@@ -335,4 +337,6 @@
 	$(".random").click(function(){
 	  random();
 	  $(".canvas-holder").addClass("visible");
+	  var loaderWidth = $("canvas").width() + 6;
+	  $(".overlay").css("width", loaderWidth);
 	});
