@@ -60,6 +60,7 @@
 			return socimar.settings.textAlignSetter();
 			socimar.draw();
 		},
+		wordBreak: "normal",
 		lineHeight: 0,
 		margin: [10,10,10],
 		textColor:"rgba(255, 255, 255, 1)"
@@ -159,23 +160,28 @@
 		lines = [],
 		line = margins[0]+lineHeight,
 		words,
-		lastSlice;
+		lastSlice,
+		splitter;
 
 		if(textWidth < maxWidth){
+			console.log(text);
 			socimar.ctx.fillText(text, margins[1], line);
 		} else {
-			words = text.split(" ");
+			if(socimar.settings.wordBreak == "normal"){
+				splitter = " ";
+			}
+			words = text.split(splitter);
 			lastSlice = 0;
 			for(i in words){
-				if(socimar.ctx.measureText(words.slice(lastSlice, parseInt(i)+1).join(" ")).width > maxWidth){
-					lines.push(words.slice(lastSlice, i).join(" "));
+				if(socimar.ctx.measureText(words.slice(lastSlice, parseInt(i)+1).join(splitter)).width > maxWidth){
+					lines.push(words.slice(lastSlice, i).join(splitter));
 					lastSlice = i;
 				}
 				if(parseInt(i)+1 == words.length) {
-					lines.push(words.slice(lastSlice).join(" "));
+					lines.push(words.slice(lastSlice).join(splitter));
 				}
 			}
-
+			console.log(lines);
 			for(e in lines){
 				socimar.ctx.fillText(lines[e], margins[1], line);
 				line = line + lineHeight;
