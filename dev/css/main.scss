@@ -318,6 +318,10 @@ canvas{
   position: absolute;
   height: 100%;
   width: 100%;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
   display: none;
   z-index: 998;
   background-color: rgba(1, 91, 101, 0.9);
